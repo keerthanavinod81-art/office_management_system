@@ -8,7 +8,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class ViewEmployee extends JFrame implements ActionListener {
 
-    JTable table = new JTable();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2897738136770493818L;
+	JTable table = new JTable();
     Choice cid = new Choice();
     JButton search, showAll, back;
 
