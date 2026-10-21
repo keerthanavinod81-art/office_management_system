@@ -7,7 +7,11 @@ import javax.swing.*;
 
 public class AddEmployee extends JFrame implements ActionListener {
 
-    JTextField tfname, tfdepartment, tfdesignation, tfsalary;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3073781592087629461L;
+	JTextField tfname, tfdepartment, tfdesignation, tfsalary;
     JButton add, back;
 
     AddEmployee() {
@@ -56,17 +60,18 @@ public class AddEmployee extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == add) {
-                       try {
+            try {
                 double salary = Double.parseDouble(tfsalary.getText());
-                String sql = "insert into employee (name, department, designation, salary) values (?, ?, ?, ?)";
-                try (Connection con = DBConnection.getConnection();
-                     PreparedStatement ps = con.prepareStatement(sql)) {
-                    ps.setString(1, tfname.getText());
-                    ps.setString(2, tfdepartment.getText());
-                    ps.setString(3, tfdesignation.getText());
-                    ps.setDouble(4, salary);
-                    ps.executeUpdate();
-                }
+                java.sql.Connection conn = DBConnection.getConnection();
+
+                PreparedStatement ps = conn.prepareStatement(
+                    "insert into employee (name, department, designation, salary) values (?, ?, ?, ?)"
+                );
+                ps.setString(1, tfname.getText());
+                ps.setString(2, tfdepartment.getText());
+                ps.setString(3, tfdesignation.getText());
+                ps.setDouble(4, salary);
+                ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Details added successfully");
                 setVisible(false);
                 new Home();
