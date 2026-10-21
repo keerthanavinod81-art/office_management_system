@@ -1,6 +1,5 @@
 package software_employee_office_management_system;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -38,7 +37,13 @@ public class Login extends JFrame implements ActionListener{
         login.addActionListener(this);
         add(login);
 
-      
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/second.jpg"));
+        Image i2 = i1.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+        ImageIcon i3 = new ImageIcon(i2);
+        JLabel image = new JLabel(i3);
+        image.setBounds(350, 0, 200, 200);
+        add(image);
+
         setSize(600, 300);
         setLocation(450, 200);
         setVisible(true);
@@ -49,25 +54,10 @@ public class Login extends JFrame implements ActionListener{
             String username = tfusername.getText();
             String password = tfpassword.getText();
 
-            String query = "SELECT * FROM login WHERE username = ? AND password = ?";
+            Conn c = new Conn();
+            String query = "select * from login where username = '"+username+"' and password = '"+password+"'";
 
-            try (Connection con = DBConnection.getConnection();
-                 PreparedStatement ps = con.prepareStatement(query)) {
-
-                ps.setString(1, username);
-                ps.setString(2, password);
-
-                ResultSet rs = ps.executeQuery();
-
-                if (rs.next()) {
-                    setVisible(false);
-                    new Home();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Invalid username or password");
-                }
-
-                rs.close();
-            }
+            ResultSet rs = c.s.executeQuery(query);
             if (rs.next()) {
                 setVisible(false);
                 new Home();
