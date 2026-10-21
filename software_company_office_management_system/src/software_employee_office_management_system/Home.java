@@ -1,6 +1,6 @@
 package software_employee_office_management_system;
 
-package employee.management.system;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +8,11 @@ import java.awt.event.*;
 
 public class Home extends JFrame implements ActionListener{
 
-    JButton view, add, update, remove;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5925788231055786256L;
+	JButton view, add, update, remove;
 
     Home() {
 

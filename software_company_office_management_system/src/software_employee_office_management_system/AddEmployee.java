@@ -7,7 +7,11 @@ import javax.swing.*;
 
 public class AddEmployee extends JFrame implements ActionListener {
 
-    JTextField tfname, tfdepartment, tfdesignation, tfsalary;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3073781592087629461L;
+	JTextField tfname, tfdepartment, tfdesignation, tfsalary;
     JButton add, back;
 
     AddEmployee() {
@@ -58,22 +62,21 @@ public class AddEmployee extends JFrame implements ActionListener {
         if (ae.getSource() == add) {
             try {
                 double salary = Double.parseDouble(tfsalary.getText());
-                Conn conn = new Conn();
-                PreparedStatement ps = conn.c.prepareStatement(
-                    "insert into employee (name, department, designation,
-salary) values (?, ?, ?, ?)");
+                java.sql.Connection conn = DBConnection.getConnection();
+
+                PreparedStatement ps = conn.prepareStatement(
+                    "insert into employee (name, department, designation, salary) values (?, ?, ?, ?)"
+                );
                 ps.setString(1, tfname.getText());
                 ps.setString(2, tfdepartment.getText());
                 ps.setString(3, tfdesignation.getText());
                 ps.setDouble(4, salary);
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Details added
-successfully");
+                JOptionPane.showMessageDialog(null, "Details added successfully");
                 setVisible(false);
                 new Home();
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Salary must be a
-number");
+                JOptionPane.showMessageDialog(null, "Salary must be a number");
             } catch (Exception e) {
                 e.printStackTrace();
             }

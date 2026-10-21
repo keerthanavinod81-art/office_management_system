@@ -6,6 +6,11 @@ import java.awt.event.*;
 
 
 public class splash extends JFrame implements ActionListener  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8397792622993118491L;
+
 	splash() {
 		
 		getContentPane ().setBackground (Color.WHITE);
