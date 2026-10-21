@@ -1,73 +1,84 @@
 package software_employee_office_management_system;
 
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Home extends JFrame implements ActionListener{
+public class Home extends JFrame implements ActionListener {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5925788231055786256L;
-	JButton view, add, update, remove;
+    private static final long serialVersionUID = 1L;
+    JButton viewBtn, addBtn, updateBtn, removeBtn, logoutBtn;
 
-    Home() {
-
+    public Home() {
+        setTitle("Employee Management System");
         setLayout(null);
+        getContentPane().setBackground(Color.WHITE);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/home.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(1120, 630, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(0, 0, 1120, 630);
-        add(image);
+        JLabel heading = new JLabel("EMPLOYEE MANAGEMENT SYSTEM");
+        heading.setBounds(300, 30, 500, 40);
+        heading.setFont(new Font("Arial", Font.BOLD, 22));
+        heading.setForeground(new Color(25, 25, 112));
+        add(heading);
 
-        JLabel heading = new JLabel("Employee Management System");
-        heading.setBounds(620, 20, 400, 40);
-        heading.setFont(new Font("Raleway", Font.BOLD, 25));
-        image.add(heading);
+        addBtn = new JButton("Add Employee");
+        addBtn.setBounds(300, 120, 180, 40);
+        addBtn.setBackground(Color.BLACK);
+        addBtn.setForeground(Color.WHITE);
+        addBtn.addActionListener(this);
+        add(addBtn);
 
-        add = new JButton("Add Employee");
-        add.setBounds(650, 80, 150, 40);
-        add.addActionListener(this);
-        image.add(add);
+        viewBtn = new JButton("View Employees");
+        viewBtn.setBounds(520, 120, 180, 40);
+        viewBtn.setBackground(Color.BLACK);
+        viewBtn.setForeground(Color.WHITE);
+        viewBtn.addActionListener(this);
+        add(viewBtn);
 
-        view = new JButton("View Employees");
-        view.setBounds(820, 80, 150, 40);
-        view.addActionListener(this);
-        image.add(view);
+        updateBtn = new JButton("Update Employee");
+        updateBtn.setBounds(300, 200, 180, 40);
+        updateBtn.setBackground(Color.BLACK);
+        updateBtn.setForeground(Color.WHITE);
+        updateBtn.addActionListener(this);
+        add(updateBtn);
 
-        update = new JButton("Update Employee");
-        update.setBounds(650, 140, 150, 40);
-        update.addActionListener(this);
-        image.add(update);
+        removeBtn = new JButton("Remove Employee");
+        removeBtn.setBounds(520, 200, 180, 40);
+        removeBtn.setBackground(Color.BLACK);
+        removeBtn.setForeground(Color.WHITE);
+        removeBtn.addActionListener(this);
+        add(removeBtn);
 
-        remove = new JButton("Remove Employee");
-        remove.setBounds(820, 140, 150, 40);
-        remove.addActionListener(this);
-        image.add(remove);
+        logoutBtn = new JButton("Logout");
+        logoutBtn.setBounds(420, 280, 160, 35);
+        logoutBtn.setBackground(Color.RED);
+        logoutBtn.setForeground(Color.WHITE);
+        logoutBtn.addActionListener(this);
+        add(logoutBtn);
 
-        setSize(1120, 630);
-        setLocation(250, 100);
+        setSize(1000, 450);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource() == add) {
+        if (ae.getSource() == addBtn) {
             setVisible(false);
-            new AddEmployee();
-        } else if (ae.getSource() == view) {
+            new AddEmployee().setVisible(true);
+        } else if (ae.getSource() == viewBtn) {
             setVisible(false);
-            new ViewEmployee();
-        } else if (ae.getSource() == update) {
+            new ViewEmployee().setVisible(true);
+        } else if (ae.getSource() == updateBtn) {
             setVisible(false);
-            new ViewEmployee();
-        } else {
+            new UpdateEmployee().setVisible(true);
+        } else if (ae.getSource() == removeBtn) {
             setVisible(false);
-            new RemoveEmployee();
+            new RemoveEmployee().setVisible(true);
+        } else if (ae.getSource() == logoutBtn) {
+            setVisible(false);
+            dispose();
+            new Login().setVisible(true);
         }
     }
 

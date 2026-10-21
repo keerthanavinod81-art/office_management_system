@@ -1,4 +1,4 @@
-
+package software_employee_office_management_system;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -83,8 +83,7 @@ public static void viewDepartments() {
                 "ID: " + rs.getInt("department_id"));
             System.out.println(
                 "Name: " + rs.getString("department_name"));
-            System.out.println(
-                "Location: " + rs.getString("location"));
+           
             System.out.println("-------------------------");
         }
 

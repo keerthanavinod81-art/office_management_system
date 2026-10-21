@@ -14,7 +14,7 @@ public class AddEmployee extends JFrame implements ActionListener {
 	JTextField tfname, tfdepartment, tfdesignation, tfsalary;
     JButton add, back;
 
-    AddEmployee() {
+    AddEmployee()  {
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 

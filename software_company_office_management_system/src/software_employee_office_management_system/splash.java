@@ -19,7 +19,7 @@ public class splash extends JFrame implements ActionListener  {
 		JLabel heading = new JLabel(" EMPLOYEE MANAGEMENT SYSTEM ");
 		heading.setBounds(80,30,1200,60);
 		heading.setFont(new Font("serif",Font.PLAIN,60));
-		heading.setForeground(Color.RED);
+		heading.setForeground(Color.BLACK);
 		add(heading);
 	
 		
@@ -28,6 +28,11 @@ public class splash extends JFrame implements ActionListener  {
 		clickhere.setBackground (Color.BLACK);
 		clickhere.setForeground(Color.WHITE);
 		add(clickhere);
+		clickhere.addActionListener(e -> {
+			new Login().setVisible(true);
+			dispose();
+			
+		});
 		
 		setSize(1170,650);
 		setLocation(200,50);

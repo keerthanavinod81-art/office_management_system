@@ -1,101 +1,70 @@
 package software_employee_office_management_system;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
 public class ViewEmployee extends JFrame implements ActionListener {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2897738136770493818L;
-	JTable table = new JTable();
-    Choice cid = new Choice();
-    JButton search, showAll, back;
+    private static final long serialVersionUID = 1L;
+    JTable table;
+    JButton backBtn;
 
-    ViewEmployee() {
-        getContentPane().setBackground(Color.WHITE);
-        setLayout(null);
+    public ViewEmployee() {
+        setTitle("View Employees");
+        setSize(850, 500);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
-        JLabel lbl = new JLabel("Search by Employee Id");
-        lbl.setBounds(20, 20, 150, 20);
-        add(lbl);
+        JLabel heading = new JLabel("EMPLOYEE DETAILS", JLabel.CENTER);
+        heading.setFont(new Font("Arial", Font.BOLD, 20));
+        heading.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
+        add(heading, BorderLayout.NORTH);
 
-        cid.setBounds(180, 20, 150, 20);
-        add(cid);
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"ID", "Name", "Department", "Designation", "Salary"});
+
+        table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane, BorderLayout.CENTER);
 
         try (Connection con = DBConnection.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery("select id from employee")) {
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM employee")) {
+
             while (rs.next()) {
-                cid.add(rs.getString("id"));
+                model.addRow(new Object[]{
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("department"),
+                    rs.getString("designation"),
+                    rs.getDouble("salary")
+                });
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error fetching data: " + e.getMessage());
         }
 
-        loadTable("select * from employee");
+        JPanel bottomPanel = new JPanel();
+        backBtn = new JButton("Back to Dashboard");
+        backBtn.setBackground(Color.BLACK);
+        backBtn.setForeground(Color.WHITE);
+        backBtn.addActionListener(this);
+        bottomPanel.add(backBtn);
+        add(bottomPanel, BorderLayout.SOUTH);
 
-        JScrollPane jsp = new JScrollPane(table);
-        jsp.setBounds(0, 100, 900, 500);
-        add(jsp);
-
-        search = new JButton("Search");
-        search.setBounds(20, 70, 90, 20);
-        search.addActionListener(this);
-        add(search);
-
-        showAll = new JButton("Show All");
-        showAll.setBounds(130, 70, 90, 20);
-        showAll.addActionListener(this);
-        add(showAll);
-
-        back = new JButton("Back");
-        back.setBounds(240, 70, 90, 20);
-        back.addActionListener(this);
-        add(back);
-
-        setSize(900, 650);
-        setLocation(300, 100);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
-    void loadTable(String query) {
-        try (Connection con = DBConnection.getConnection();
-             Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(query)) {
-            ResultSetMetaData md = rs.getMetaData();
-            int cols = md.getColumnCount();
-            DefaultTableModel model = new DefaultTableModel();
-            for (int i = 1; i <= cols; i++) {
-                model.addColumn(md.getColumnLabel(i));
-            }
-            while (rs.next()) {
-                Object[] row = new Object[cols];
-                for (int i = 1; i <= cols; i++) {
-                    row[i - 1] = rs.getObject(i);
-                }
-                model.addRow(row);
-            }
-            table.setModel(model);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource() == search) {
-            if (cid.getItemCount() > 0) {
-                loadTable("select * from employee where id = " + cid.getSelectedItem());
-            }
-        } else if (ae.getSource() == showAll) {
-            loadTable("select * from employee");
-        } else {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == backBtn) {
             setVisible(false);
-            new Home();
+            dispose();
+            new Home().setVisible(true);
         }
     }
 

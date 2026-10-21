@@ -5,16 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class Login extends JFrame implements ActionListener{
+public class Login extends JFrame implements ActionListener {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1066404725758743369L;
-	JTextField tfusername, tfpassword;
+    private static final long serialVersionUID = -1066404725758743369L;
+    JTextField tfusername, tfpassword;
 
-    Login() {
-
+    public Login() {
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
@@ -30,7 +26,7 @@ public class Login extends JFrame implements ActionListener{
         lblpassword.setBounds(40, 70, 100, 30);
         add(lblpassword);
 
-        tfpassword = new JTextField();
+        tfpassword = new JPasswordField(); // JPasswordField masks the input
         tfpassword.setBounds(150, 70, 150, 30);
         add(tfpassword);
 
@@ -41,28 +37,35 @@ public class Login extends JFrame implements ActionListener{
         login.addActionListener(this);
         add(login);
 
-      
         setSize(600, 300);
         setLocation(450, 200);
         setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
-        try {
-            String username = tfusername.getText();
-            String password = tfpassword.getText();
+        String username = tfusername.getText();
+        String password = tfpassword.getText();
+        
+        // Matches your app_users table columns in MySQL
+        String sql = "SELECT * FROM app_users WHERE username = ? AND password_hash = ?";
 
-            Conn c = new Conn();
-            String query = "select * from login where username = '"+username+"' and password = '"+password+"'";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ResultSet rs = c.s.executeQuery(query);
-            if (rs.next()) {
-                setVisible(false);
-                new Home();
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid username or password");
-                setVisible(false);
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    this.dispose();
+                    Home home = new Home();
+                    home.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password");
+                }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
