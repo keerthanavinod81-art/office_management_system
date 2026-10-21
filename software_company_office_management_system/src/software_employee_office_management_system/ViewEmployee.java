@@ -23,9 +23,9 @@ public class ViewEmployee extends JFrame implements ActionListener {
         cid.setBounds(180, 20, 150, 20);
         add(cid);
 
-        try {
-            Conn c = new Conn();
-            ResultSet rs = c.s.executeQuery("select id from employee");
+        try (Connection con = DBConnection.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery("select id from employee")) {
             while (rs.next()) {
                 cid.add(rs.getString("id"));
             }
@@ -60,9 +60,9 @@ public class ViewEmployee extends JFrame implements ActionListener {
     }
 
     void loadTable(String query) {
-        try {
-            Conn c = new Conn();
-            ResultSet rs = c.s.executeQuery(query);
+        try (Connection con = DBConnection.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(query)) {
             ResultSetMetaData md = rs.getMetaData();
             int cols = md.getColumnCount();
             DefaultTableModel model = new DefaultTableModel();
