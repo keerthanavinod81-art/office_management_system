@@ -10,16 +10,16 @@ public class Login extends JFrame implements ActionListener {
     private static final long serialVersionUID = -1066404725758743369L;
     JTextField tfusername, tfpassword;
 
-    public Login() {
+    public Login(){
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
 
-        JLabel lblusername = new JLabel("Username");
+        JLabel lblusername= new JLabel("Username");
         lblusername.setBounds(40, 20, 100, 30);
         add(lblusername);
 
         tfusername = new JTextField();
-        tfusername.setBounds(150, 20, 150, 30);
+        tfusername.setBounds(150,20, 150, 30);
         add(tfusername);
 
         JLabel lblpassword = new JLabel("Password");

@@ -32,7 +32,7 @@ public class ViewEmployee extends JFrame implements ActionListener {
 
         try (Connection con = DBConnection.getConnection();
              Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM employee")) {
+             ResultSet rs =stmt.executeQuery("SELECT * FROM employee")) {
 
             while (rs.next()) {
                 model.addRow(new Object[]{

@@ -13,7 +13,7 @@ public class splash extends JFrame implements ActionListener  {
 
 	splash() {
 		
-		getContentPane ().setBackground (Color.WHITE);
+		getContentPane().setBackground (Color.WHITE);
 		setLayout (null);
 		
 		JLabel heading = new JLabel(" EMPLOYEE MANAGEMENT SYSTEM ");

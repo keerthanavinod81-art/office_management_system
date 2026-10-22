@@ -123,7 +123,7 @@ public class UpdateEmployee extends JFrame implements ActionListener {
     }
 
     public void deleteEmployee() {
-        String id = JOptionPane.showInputDialog(this, "Enter Employee ID to delete:");
+        String id = JOptionPane.showInputDialog(this,"Enter Employee ID to delete:");
 
         if (id == null || id.trim().isEmpty()) {
             return;

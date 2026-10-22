@@ -83,7 +83,7 @@ public static void viewDepartments() {
                 "ID: " + rs.getInt("department_id"));
             System.out.println(
                 "Name: " + rs.getString("department_name"));
-           
+          
             System.out.println("-------------------------");
         }
 
@@ -103,15 +103,12 @@ public static void viewAttendance() {
         System.out.println("\n--- Attendance Details ---");
 
         while (rs.next()) {
-            System.out.println(
-                "Attendance ID: " + rs.getInt("attendance_id"));
-            System.out.println(
-                "Employee ID: " + rs.getInt("employee_id"));
-            System.out.println(
-                "Date: " + rs.getDate("attendance_date"));
-            System.out.println(
-                "Status: " + rs.getString("attendance_status"));
-            System.out.println("-------------------------");
+            System.out.println("Employee ID : " + rs.getString("employee_id"));
+            System.out.println("Date        : " + rs.getDate("attendance_date"));
+            System.out.println("Check In    : " + rs.getTime("check_in_time"));
+            System.out.println("Check Out   : " + rs.getTime("check_out_time"));
+            System.out.println("Total Hours : " + rs.getDouble("total_hours"));
+            System.out.println("---------------------------------");
         }
 
     } catch (SQLException e) {

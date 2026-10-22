@@ -139,7 +139,7 @@ public class RemoveEmployee extends JFrame implements ActionListener {
             try (Connection con = DBConnection.getConnection();
                     Statement stmt = con.createStatement()) {
 
-                   stmt.execute("SET FOREIGN_KEY_CHECKS = 0;");
+                   stmt.execute("SET FOREIGN_KEY_CHECKS= 0;");
                    int rows = stmt.executeUpdate("DELETE FROM employee WHERE id = " + selectedId.trim());
                    stmt.execute("SET FOREIGN_KEY_CHECKS = 1;");
 
